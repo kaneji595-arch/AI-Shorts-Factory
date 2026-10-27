@@ -1,11 +1,31 @@
 name: Shorts Factory
+
 on:
-  workflow_dispatch 
-  jobs:
-    build:
-        runs-on: ubuntu-lstest
-            steps:
-                  name:Checkout
-                          uses: acions/checkout@v4
-                                - name: Echo test
-                                        run: echo hello
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Test Factory
+        run: |
+          echo "Shorts Factory started!"
+          python --version
+          ffmpeg -version
+
+      - name: Finish
+        run: echo "Factory test completed!"
